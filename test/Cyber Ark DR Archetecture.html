@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.10/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.10/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.10/dist/index.js"></script><script>(r => {
+              setTimeout(r);
+            })(function renderToolbar() {
+  const {
+    markmap,
+    mm
+  } = window;
+  const {
+    el
+  } = markmap.Toolbar.create(mm);
+  el.setAttribute('style', 'position:absolute;bottom:20px;right:20px');
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+            })(() => window.markmap,null,{"content":"&#x1f5fa;&#xfe0f; System Services Architecture","children":[{"content":"&#x1f4c1; Users Manager","children":[{"content":"<strong>Role:</strong> Manages user lifecycle (create, read, update, delete user info)","children":[],"payload":{"tag":"li","lines":"3,4"}},{"content":"<strong>Interactions:</strong>","children":[{"content":"Communicates with the <strong>Users Database</strong> for persistent storage","children":[],"payload":{"tag":"li","lines":"5,6"}},{"content":"Offers CRUD APIs to Admin and other internal services","children":[],"payload":{"tag":"li","lines":"6,7"}}],"payload":{"tag":"li","lines":"4,7"}},{"content":"<strong>DR Concern:</strong> Must maintain consistent user records during failover and afterwards","children":[],"payload":{"tag":"li","lines":"7,9"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"&#x1f511; Passwords Manager","children":[{"content":"<strong>Role:</strong> Manages password lifecycle (generate, update, rotate, reset)","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"<strong>Interactions:</strong>","children":[{"content":"Persists password data (e.g., creation time) to its own <strong>Passwords Database</strong>","children":[],"payload":{"tag":"li","lines":"12,13"}},{"content":"Communicates with the <strong>Authentication Manager</strong> for real-time password checks","children":[],"payload":{"tag":"li","lines":"13,14"}}],"payload":{"tag":"li","lines":"11,14"}},{"content":"<strong>DR Concern:</strong> Ensures secure password store replication and consistent rotation policies across regions","children":[],"payload":{"tag":"li","lines":"14,16"}}],"payload":{"tag":"h2","lines":"9,10"}},{"content":"&#x1f512; Authentication Manager","children":[{"content":"<strong>Role:</strong> Authenticates users, handles token creation/validation, and manages sessions","children":[],"payload":{"tag":"li","lines":"17,18"}},{"content":"<strong>Interactions:</strong>","children":[{"content":"Queries the <strong>Users Manager</strong> for user details","children":[],"payload":{"tag":"li","lines":"19,20"}},{"content":"Reads/Writes to its own <strong>Auth Database</strong> (tokens, session info)","children":[],"payload":{"tag":"li","lines":"20,21"}},{"content":"Publishes login/logout events to <strong>Pub/Sub</strong> for the Audit Service","children":[],"payload":{"tag":"li","lines":"21,22"}}],"payload":{"tag":"li","lines":"18,22"}},{"content":"<strong>DR Concern:</strong> Maintains consistent token states and minimizes RPO to avoid unnecessary session invalidations","children":[],"payload":{"tag":"li","lines":"22,24"}}],"payload":{"tag":"h2","lines":"16,17"}},{"content":"&#x1f464; Admin","children":[{"content":"<strong>Role:</strong> Provides the administrative UI/portal for privileged actions (bulk provisioning, monitoring, password policy updates, etc.)","children":[],"payload":{"tag":"li","lines":"25,26"}},{"content":"<strong>Interactions:</strong>","children":[{"content":"Issues CRUD commands to the <strong>Users Manager</strong> and <strong>Passwords Manager</strong>","children":[],"payload":{"tag":"li","lines":"27,28"}},{"content":"May trigger or monitor DR procedures (failovers)","children":[],"payload":{"tag":"li","lines":"28,29"}}],"payload":{"tag":"li","lines":"26,29"}},{"content":"<strong>DR Concern:</strong> Ensures no privileged actions are lost during failover and logs all changes for auditing","children":[],"payload":{"tag":"li","lines":"29,31"}}],"payload":{"tag":"h2","lines":"24,25"}},{"content":"&#x1f4dd; Audit Service","children":[{"content":"<strong>Role:</strong> Collects and stores audit logs for compliance and forensics (tracking &quot;who did what, when&quot;)","children":[],"payload":{"tag":"li","lines":"32,33"}},{"content":"<strong>Interactions:</strong>","children":[{"content":"Subscribes to events from <strong>Pub/Sub</strong> for record keeping","children":[],"payload":{"tag":"li","lines":"34,35"}},{"content":"Persists logs in its own <strong>Audit Database</strong>","children":[],"payload":{"tag":"li","lines":"35,36"}}],"payload":{"tag":"li","lines":"33,36"}},{"content":"<strong>DR Concern:</strong> Maintains an unbroken, tamper-proof trail of events during and after failures","children":[],"payload":{"tag":"li","lines":"36,38"}}],"payload":{"tag":"h2","lines":"31,32"}},{"content":"&#x1f4e1; Pub/Sub (Event Bus / Message Broker)","children":[{"content":"<strong>Role:</strong> Enables asynchronous communication between services (e.g., notifications like &#x201c;new user created,&#x201d; &#x201c;password changed&#x201d;)","children":[],"payload":{"tag":"li","lines":"39,40"}},{"content":"<strong>Interactions:</strong>","children":[{"content":"Services publish or subscribe to relevant event topics","children":[],"payload":{"tag":"li","lines":"41,42"}},{"content":"<strong>Audit Service</strong> subscribes to all security/audit topics","children":[],"payload":{"tag":"li","lines":"42,43"}}],"payload":{"tag":"li","lines":"40,43"}},{"content":"<strong>DR Concern:</strong> Ensures message durability and prevents event loss (events must be replayed or processed exactly once)","children":[],"payload":{"tag":"li","lines":"43,45"}}],"payload":{"tag":"h2","lines":"38,39"}},{"content":"&#x1f5c4;&#xfe0f; Databases (Users DB, Passwords DB, Auth DB, Audit DB)","children":[{"content":"<strong>Role:</strong> Each database stores domain-specific data (users, passwords, tokens, audit logs)","children":[],"payload":{"tag":"li","lines":"46,47"}},{"content":"<strong>Interactions:</strong>","children":[{"content":"Each microservice uses its own dedicated database or set of tables","children":[],"payload":{"tag":"li","lines":"48,49"}}],"payload":{"tag":"li","lines":"47,49"}},{"content":"<strong>DR Concern:</strong> Requires proper replication or backups for each database to minimize data loss (low RPO) and ensure fast restoration (low RTO)","children":[],"payload":{"tag":"li","lines":"49,51"}}],"payload":{"tag":"h2","lines":"45,46"}},{"content":"&#x1f465; End User","children":[{"content":"<strong>Role:</strong> The front-end consumer (web/mobile client, CLI, etc.)","children":[],"payload":{"tag":"li","lines":"52,53"}},{"content":"<strong>Interactions:</strong>","children":[{"content":"Primarily interacts with the <strong>Authentication Manager</strong> to log in and access protected resources","children":[],"payload":{"tag":"li","lines":"54,55"}},{"content":"May interact with the <strong>Users Manager</strong> for profile updates (depending on design)","children":[],"payload":{"tag":"li","lines":"55,56"}}],"payload":{"tag":"li","lines":"53,56"}},{"content":"<strong>DR Concern:</strong> Ensures minimal downtime and a seamless user experience, even if failover occurs mid-session","children":[],"payload":{"tag":"li","lines":"56,57"}}],"payload":{"tag":"h2","lines":"51,52"}}],"payload":{"tag":"h1","lines":"0,1"}},{})</script>
+</body>
+</html>

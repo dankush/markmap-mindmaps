@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML File Index</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>HTML File Index</h1>
+  <ul id="file-list"></ul>
+
+  <script>
+    const repoOwner = "dankush"; // Replace with your GitHub username
+    const repoName = "markmap-mindmaps"; // Replace with your repository name
+    const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/`;
+
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("HTTP error " + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const fileList = document.getElementById("file-list");
+        data.forEach(file => {
+          if (file.name.endsWith(".html")) {
+            const listItem = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = `https://${repoOwner}.github.io/${repoName}/${file.name}`;
+            link.textContent = file.name;
+            listItem.appendChild(link);
+            fileList.appendChild(listItem);
+          }
+        });
+      })
+      .catch(error => {
+        console.error("Error fetching files:", error);
+        const fileList = document.getElementById("file-list");
+        const listItem = document.createElement("li");
+        listItem.textContent = "Failed to load files. Check your repository or API settings.";
+        fileList.appendChild(listItem);
+      });
+  </script>
+</body>
+</html>
