@@ -1,0 +1,100 @@
+# 🔒 CyberArk מוצרי אבטחת זהויות – ארכיטקטורה ויישומים
+
+## 🔐 Privileged Access Management (PAM)
+- **מטרה:** הגנה על חשבונות בעלי הרשאות גבוהות (Admin, Root, Service Accounts) והפחתת סיכוני גישה לא מורשית  
+- **🧱 ארכיטקטורה:**
+  - **🏦 Vault (Digital Vault):** מאגר מוצפן לשמירה וניהול כל הסודות והסיסמאות  
+  - **🌐 Password Vault Web Access (PVWA):** ממשק לניהול ושליפת סודות  
+  - **🔄 Central Policy Manager (CPM):** רוטציה אוטומטית של סיסמאות ומפתחות  
+  - **🖥️ Privileged Session Manager (PSM):** Proxy/Jumphost לניטור, הקלטה וחסימת פקודות מסוכנות  
+  - **🏠 PAM Self-Hosted:** גרסה מקומית מלאה  
+  - **☁️ Privilege Cloud:** גרסה מנוהלת בענן (SaaS)  
+- **💡 שימושים נפוצים:**
+  - גישה מאובטחת לשרתים ומסדי נתונים  
+  - רוטציה אוטומטית של סיסמאות אדמין  
+  - ניטור מפורט לצורכי Audit  
+  - ביטול הרשאות קבועות (Zero Standing Privileges)
+
+---
+
+## 🧩 Identity and Access Management (IAM)
+- **מטרה:** ניהול זהויות משתמשים, אימות והרשאות גישה למערכות פנים וענן  
+- **🧱 ארכיטקטורה:**
+  - **☁️ CyberArk Identity (SaaS):** SSO, Adaptive MFA וניהול משתמשים  
+  - **🔄 Identity Flows:** No-Code לאוטומציה של provisioning/deprovisioning  
+  - **✅ Identity Compliance:** SoD, recertifications ובקרת הרשאות אוטומטית  
+  - **📋 IGA:** ניהול מחזור חיים של זהויות אנושיות ומכאניות  
+  - **🔐 Workforce Password Management:** מאגר סיסמאות מאובטח עם שיתוף מבוקר  
+- **💡 שימושים נפוצים:**
+  - גישה מאובטחת לאפליקציות SaaS  
+  - עמידה בדרישות רגולציה (SOX, ISO27001)  
+  - אוטומציית Onboarding/Offboarding  
+  - צמצום עיכובים בגישה למשאבים עסקיים
+
+---
+
+## 🔒 Secrets Management
+- **מטרה:** ניהול סודות אפליקטיביים (API Keys, Tokens, Credentials) בצורה מאובטחת ואוטומטית  
+- **🧱 ארכיטקטורה:**
+  - **🛡️ Conjur Enterprise:** ניהול סודות ל־DevOps, Containers ו־Kubernetes  
+  - **☁️ Secrets Manager (SaaS):** פתרון ענן מאוחד לניהול secrets במulti-cloud  
+  - **🔗 Secrets Hub:** חיבור בין PAM לפלטפורמות ענן (AWS, Azure)  
+  - **🔑 Credential Providers:** אחזור מאובטח של סודות לאפליקציות Legacy  
+- **💡 שימושים נפוצים:**
+  - אחסון והפצה מאובטחת בין microservices  
+  - מניעת Hard-coded Secrets בקוד מקור  
+  - רוטציה אוטומטית של מפתחות גישה
+
+---
+
+## 🧠 Identity Security Intelligence & CORA AI
+- **מטרה:** זיהוי חריגות ואיומים על זהויות באמצעות בינה מלאכותית וניתוח נתונים  
+- **🧱 ארכיטקטורה:**
+  - **🤖 CORA AI:** מנוע אנליטי לחיזוי והמלצות אבטחה בזמן אמת  
+  - **📊 Identity Security Intelligence:** אוסף וניתוח לוגים ונתוני גישה מכל השירותים (PAM, IAM, Secrets)  
+- **💡 שימושים נפוצים:**
+  - זיהוי גישה חריגה או מסוכנת  
+  - המלצות לתיקון מדיניות גישה  
+  - דירוג רמת סיכון לכל משתמש
+
+---
+
+## ☁️ Cloud & Infrastructure Security
+- **מטרה:** הגנה על משאבים בענן ובתשתיות (AWS, Azure, GCP, Kubernetes)  
+- **🧱 ארכיטקטורה:**
+  - **🔒 Secure Cloud Access (SCA):** גישה מאובטחת לממשקי ניהול ענן ללא הרשאות קבועות  
+  - **📈 Cloud Visibility:** מפה גרפית של זהויות והרשאות בענן עם ניתוח סיכון  
+  - **🛠️ Secure Infrastructure Access (DPA):** גישה מאובטחת לתשתיות ללא VPN  
+  - **🌐 Remote Access:** Zero Trust לגישה חיצונית עם Biometric MFA  
+- **💡 שימושים נפוצים:**
+  - ניהול גישה של DevOps ו-Contractors  
+  - הורדת סיכוני privilege בענן  
+  - ניטור פעילות ואכיפת least privilege בענן
+
+---
+
+## 🤖 Machine Identity Security
+- **מטרה:** הגנה על זהויות של מכונות, שירותים ותהליכים אוטומטיים  
+- **🧱 ארכיטקטורה:**
+  - **📜 Certificate Manager:** ניהול והנפקת תעודות TLS/SSL (SaaS/Self-Hosted)  
+  - **⚙️ Workload Identity Manager:** ניהול זהויות של workloads  
+  - **🔐 Zero Touch PKI:** PKI אוטומטי ללא הגדרות ידניות  
+  - **🔑 SSH Manager for Machines:** ניהול מפתחות SSH למכונות  
+  - **🖋️ Code Sign Manager:** הגנה על מפתחות חתימת קוד  
+  - **🛠️ Developer Tools (vCert, APIs):** אינטגרציה עם CI/CD pipelines  
+- **💡 שימושים נפוצים:**
+  - חידוש אוטומטי של תעודות SSL  
+  - ביטול מפתחות SSH ישנים  
+  - חתימה מאובטחת על קוד ו-containers
+
+---
+
+## 💻 Endpoint Identity Security
+- **מטרה:** מניעת מתקפות מבוססות גישה במחשבי קצה  
+- **🧱 ארכיטקטורה:**
+  - **🔒 Endpoint Privilege Manager (EPM):** הסרת הרשאות אדמין מקומיות, Application Control, Credential Theft Protection  
+  - **🌐 Secure Browser:** דפדפן מבוקר ובטוח לגישה למערכות רגישות  
+- **💡 שימושים נפוצים:**
+  - הגנה מפני ransomware  
+  - צמצום הרשאות מקומיות  
+  - הפרדת סביבת גלישה מאובטחת למשתמשים רגישים (הנהלה, פיננסים)
