@@ -1,0 +1,106 @@
+# 🛡️ CyberArk Endpoint Privilege Manager (EPM)
+
+## 🧩 סקירה כללית – מהו CyberArk EPM
+- **CyberArk Endpoint Privilege Manager (EPM)** הוא פתרון אבטחת תחנות קצה (Endpoint Security) שמטרתו:
+  - ⚖️ **Least Privilege** – ביטול הרשאות אדמין מיותרות  
+  - 🔒 **Credential Theft Prevention** – מניעת גניבת אישורים  
+  - 🗂️ **Application Control** – בקרה על הרצת תוכנות  
+  - 🛡️ **Threat Protection** – הגנה מפני איומים מתקדמים (כולל רנסומוור)  
+- המערכת משלבת בין שליטה בהרשאות, בקרה על הרצת תוכנות וזיהוי/מניעה של איומים בזמן אמת – ובכך יוצרת שכבת הגנה אחידה על כל תחנות הקצה הארגוניות (Windows / macOS)
+
+---
+
+## 🧠 עקרונות מרכזיים
+1. ⚙️ **Least Privilege Enforcement**  
+   - רק אפליקציות מאושרות מקבלות הרשאות מוגברות  
+2. 📑 **Application Control Framework**  
+   - מדיניות מבוססת סיכון לטיפול בתוכנות חדשות או לא מסווגות  
+3. 🌐 **Integrated Threat Intelligence**  
+   - חיבור לשירותים חיצוניים כמו VirusTotal לניתוח התנהגות חשודה  
+4. 🎛️ **Granular Policy Control**  
+   - מדיניות גמישה לפי משתמש, מחשב, Active Directory Group או הקשר עסקי  
+
+---
+
+## 🧱 ארכיטקטורה – Agent • Server • Console
+
+### 1. 🕵️ EPM Agent
+- רכיב קל (Lightweight) המותקן בתחנות הקצה  
+- מבצע enforcement של מדיניות הרשאות ובקרת יישומים  
+- **Offline-Capable** – כולל cache למדיניות  
+- מנטר אירועים ומדווח לשרת הניהול  
+- אחראי על:  
+  - 👤 **Privilege Elevation** (token elevation)  
+  - 📊 **Application Reputation** (ניטור, חסימה, ניתוח)  
+  - תגובה לאיומים בזמן אמת (blocking, alert, isolation)  
+
+### 2. ☁️ EPM Server / SaaS Cloud
+- מרכז שליטה ובקרה  
+- מאחסן ומפיץ מדיניות (Policies, Sets)  
+- אוסף ומנתח **Events** מכל ה-Agents  
+- מתממשק עם:  
+  - 🔗 Active Directory / Azure AD  
+  - 🛠️ SCCM / Intune  
+  - 🔔 SIEM / SOAR  
+  - 🏦 CyberArk PAM Core  
+
+### 3. 🌐 Management Console (Web UI)
+- ממשק וובי מאובטח למנהלי אבטחה  
+- מאפשר:  
+  - הגדרת Least Privilege & Application Control  
+  - יצירת Sets (קבוצות מחשבים/משתמשים)  
+  - ניתוח אירועים והפקת דוחות  
+  - שילוב **Threat Intelligence** & **Application Catalog**  
+
+---
+
+## ⚙️ רכיבי ליבה
+
+### 1. 🔐 Privilege Management
+- פתרון לבעיה של אפליקציות הדורשות הרשאות אדמין  
+- מאפשר elevation מבוקר של תהליכים בלבד באמצעות security token manipulation  
+- תאימות לרגולציות (SOX, HIPAA, FDCC, USGCB)  
+- דיווח ל-Event Management על ניסיונות הרצה לא מורשים  
+
+### 2. 📂 Application Control
+- דירוג אפליקציות לפי רמת סיכון  
+- מצבי מדיניות:  
+  - Monitor  
+  - Restrict Access  
+  - Default Deny  
+- מנגנוני אמון:  
+  - Trusted Sources  
+  - Inherited Trust  
+- **Application Catalog** & **Event Management Page**  
+
+### 3. 🛡️ Threat Protection
+- מודול **Threat Intelligence** משולב  
+- חיבור ל-VirusTotal  
+- זיהוי וחסימה בזמן אמת  
+- תצוגת תוצאות ניתוח בממשק האירועים  
+
+---
+
+## 🔒 עקרונות אבטחה והגנה
+- **Credential Theft Prevention** – חסימת שימוש בסיסמאות או tokens נגנבים  
+- **Attack Surface Reduction** – הפחתת שטח התקיפה  
+- **Dynamic Response** – מדיניות משתנה לפי הקשר ושעות פעילות  
+- **Visibility & Analytics** – מעקב בזמן אמת אחר שימוש בהרשאות ופעולות אפליקציות  
+
+---
+
+## 🧩 אינטגרציות עיקריות
+- 🔗 Active Directory / Azure AD  
+- 🏦 CyberArk Identity Security Suite  
+- 🔔 SIEM / SOAR (Splunk, QRadar, ArcSight)  
+- 🛠️ SCCM / Intune  
+- 📡 REST API לאוטומציה ואינטגרציה עם מערכות צד ג'  
+
+---
+
+## 🏁 מסקנה
+- פתרון SaaS/On-Prem לביטול חשבונות אדמין מקומיים  
+- מניעת הרצת תוכנות לא מאושרות  
+- זיהוי ובלימת מתקפות privilege escalation ורנסומוור  
+- שליטה, נראות ואכיפה מרכזית  
+- שמירה על חוויית משתמש חלקה  
